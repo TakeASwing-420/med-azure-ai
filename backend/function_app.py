@@ -10,7 +10,7 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 # Foundry Agent and Project Settings
 PROJECT_ENDPOINT = "https://med-rag.services.ai.azure.com/api/projects/med-rag-openai"
 AGENT_NAME = "med-rag-assistant"
-AGENT_VERSION = "3"
+AGENT_VERSION = "5"
 
 # Initialize singletons for client and credential
 credential = DefaultAzureCredential()
