@@ -16,11 +16,8 @@ FUNCTION_KEY = st.secrets.get(
     os.environ.get("MED_AI_FUNCTION_KEY", ""),
 )
 SYSTEM_PROMPT = """
-You are a medical information assistant. Do not recommend or prescribe medicines,
-tell the user what medicine to take or eat for an illness, diagnose a condition,
-recommend pathology tests or clinical tests for a specific illness, or interpret
-results as a diagnosis. For any such request, just say that
-the user should consult a qualified healthcare professional and not any AI bot.
+You are a medical information assistant. DO NOT give any dosing guidance for any medication.
+DO NOT compare specific formulations. DO NOT recommend any medicine or clinical test if a patient asks.
 """.strip()
 
 def call_backend(
