@@ -15,11 +15,6 @@ FUNCTION_KEY = st.secrets.get(
     "MED_AI_FUNCTION_KEY",
     os.environ.get("MED_AI_FUNCTION_KEY", ""),
 )
-SYSTEM_PROMPT = """
-You are a medical information assistant. DO NOT give any dosing guidance for any medication.
-DO NOT compare specific formulations. DO NOT recommend any medicine or clinical test if a patient asks.
-""".strip()
-
 def call_backend(
     api_url: str,
     chat_history: list[dict[str, str]],
@@ -157,13 +152,11 @@ with header_action:
 api_url = DEFAULT_API_URL
 
 if clear_chat:
-    st.session_state.messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    st.session_state.messages = []
     st.rerun()
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-elif not any(message.get("role") == "system" for message in st.session_state.messages):
-    st.session_state.messages.insert(0, {"role": "system", "content": SYSTEM_PROMPT})
+    st.session_state.messages = []
 
 st.caption("Azure Function handles conversation history, retrieval, and answer generation.")
 for message in st.session_state.messages:
@@ -191,6 +184,7 @@ if user_prompt:
             chat_history = [
                 {"role": message["role"], "content": message["content"]}
                 for message in st.session_state.messages
+                if message["role"] in ["user", "assistant"]
             ]
             answer_text, contexts = call_backend(
                 api_url=api_url,

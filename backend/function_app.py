@@ -46,9 +46,15 @@ def chat_endpoint(req: func.HttpRequest) -> func.HttpResponse:
     try:
         # 1. Format input messages for the response API
         formatted_input = [
-            {"role": msg.get("role"), "content": msg.get("content")}
+            {
+                "type": "message",
+                "role": msg.get("role"),
+                "content": msg.get("content"),
+            }
             for msg in chat_history
-            if msg.get("role") in ["system", "user", "assistant"] and msg.get("content")
+            if msg.get("role") in ["system", "user", "assistant"]
+            and isinstance(msg.get("content"), str)
+            and msg.get("content", "").strip()
         ]
 
         # 2. Invoke the Agent via the Responses API

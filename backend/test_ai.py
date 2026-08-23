@@ -6,7 +6,7 @@ from azure.ai.projects import AIProjectClient
 # 1. Configuration
 ENDPOINT = "https://med-rag.services.ai.azure.com/api/projects/med-rag-openai"
 AGENT_NAME = "med-rag-assistant"
-AGENT_VERSION = "3"
+AGENT_VERSION = "5"
 TENANT_ID = "114351e2-dfd8-4893-bc43-7ba1e6c8b781"
 
 # 2. Authenticate
@@ -23,7 +23,13 @@ print(f"User: {user_query}\n")
 print("Waiting for response...")
 
 response = openai_client.responses.create(
-    input=[{"role": "user", "content": user_query}],
+    input=[
+        {
+            "type": "message",
+            "role": "user",
+            "content": user_query,
+        }
+    ],
     extra_body={
         "agent_reference": {
             "name": AGENT_NAME,
