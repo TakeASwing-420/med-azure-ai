@@ -1,0 +1,3 @@
+.medvenv
+__pycache__/
+*.env

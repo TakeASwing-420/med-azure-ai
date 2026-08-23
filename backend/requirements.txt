@@ -1,0 +1,3 @@
+azure-functions
+azure-ai-projects
+azure-identity
